@@ -57,7 +57,15 @@ public class PetService {
 
     @Transactional(readOnly = true)
     public List<Pet> getAllPets() {
-        return petRepository.findAll();
+        List<Pet> pets = petRepository.findAll();
+
+        pets.forEach(pet -> {
+            if (pet.getOwner() != null) {
+                pet.getOwner().getId();
+            }
+        });
+
+        return pets;
     }
 
     @Transactional(readOnly = true)
@@ -68,6 +76,14 @@ public class PetService {
             );
         }
 
-        return petRepository.findAllByOwnerId(ownerId);
+        List<Pet> pets = petRepository.findAllByOwnerId(ownerId);
+
+        pets.forEach(pet -> {
+            if (pet.getOwner() != null) {
+                pet.getOwner().getId();
+            }
+        });
+
+        return pets;
     }
 }

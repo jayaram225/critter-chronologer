@@ -33,6 +33,12 @@ public class CustomerService {
 
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+
+        customers.forEach(customer ->
+                customer.getPets().size()
+        );
+
+        return customers;
     }
 }
